@@ -1,0 +1,12 @@
+server:
+  path: /hook
+  port: 8080
+
+im:
+  telegram:
+    enable: false
+    template_file: default.txt
+
+  ding_talk:
+    enable: false
+    template_file: default.txt
