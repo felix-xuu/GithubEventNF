@@ -1,9 +1,9 @@
 package fun
 
 import (
-	"fmt"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
+	"log"
 	"path/filepath"
 )
 
@@ -15,6 +15,9 @@ type Config struct {
 	IM map[string]struct {
 		Enable          bool   `yaml:"enable"`
 		TemplateFile    string `yaml:"template_file"`
+		Token           string `yaml:"token"`
+		ChatId          int64  `yaml:"chat_id"`
+		MessageType     string `yaml:"message_type"`
 		TemplateContent string
 	} `yaml:"im"`
 }
@@ -24,11 +27,11 @@ var ParsedConfig Config
 func ConfigParse() {
 	file, err := ioutil.ReadFile("config.yml")
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 	err = yaml.Unmarshal(file, &ParsedConfig)
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 	if "" == ParsedConfig.Server.Path {
 		ParsedConfig.Server.Path = "/hook"
@@ -45,11 +48,11 @@ func ConfigParse() {
 			enabledIM = append(enabledIM, key)
 			file, err := ioutil.ReadFile(filepath.Join("templates", value.TemplateFile))
 			if err != nil {
-				panic(err)
+				log.Panic(err)
 			}
 			value.TemplateContent = string(file)
 			ParsedConfig.IM[key] = value
 		}
 	}
-	fmt.Println("enabled IMs:", enabledIM)
+	log.Println("enabled IMs:", enabledIM)
 }

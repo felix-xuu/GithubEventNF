@@ -4,8 +4,11 @@ server:
 
 im:
   telegram:
-    enable: false
-    template_file: default.txt
+    enable: true
+    template_file: markdown.md
+    token: # the bot token
+    chat_id: # your chat id
+    message_type: Markdown # can be HTML or Markdown
 
   ding_talk:
     enable: false
